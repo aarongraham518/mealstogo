@@ -5,7 +5,7 @@ import { ActivityIndicator, Colors } from 'react-native-paper';
 
 import {Search} from '../../restaurants/components/search.component';
 import {SafeArea} from '../../../components/utility/safe-area.component'; 
-import { FlatList } from 'react-native';
+import { FlatList, Pressable } from 'react-native';
 import { RestaurantInfoCard } from '../components/restaurant-info-card.component';
 import { Spacer } from "../../../components/spacer/spacer.component";
  
@@ -28,10 +28,10 @@ const LoadingContainer = styled(View)`
 `;
 
 
-export const RestaurantsScreen = () => {
+export const RestaurantsScreen = ({navigation}) => {
 
-  const {isLoading, error, restaurants} = useContext(RestaurantsContext);
-  // console.log(restaurantContext);
+  const {isLoading, restaurants} = useContext(RestaurantsContext);
+  console.log(navigation);
 
   return (
     <SafeArea>
@@ -52,9 +52,12 @@ export const RestaurantsScreen = () => {
           renderItem={({item}) => {
             console.log(item);
             return (
-            <Spacer position="bottom" size="large">
-              <RestaurantInfoCard restaurant={item}/>
-            </Spacer>
+            <Pressable onPress={() => navigation.navigate("RestaurantDetail")}>
+                <Spacer position="bottom" size="large">
+                  <RestaurantInfoCard restaurant={item}/>
+                </Spacer>
+            </Pressable>
+            
           )}}
           keyExtractor={(item) => item.name}
         />
